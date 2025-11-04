@@ -1,9 +1,10 @@
+/* eslint-disable no-console */
 import { Server } from "http";
 import app from "./app";
 import { connectDB } from "./app/config/db.config";
+import { envVars } from "./app/config/envVar";
 
 let server: Server;
-const PORT = process.env.PORT || 4000;
 
 // Start The Server
 const startServer = async (): Promise<void> => {
@@ -12,8 +13,8 @@ const startServer = async (): Promise<void> => {
         await connectDB();
 
         // Start Express server
-        server = app.listen(PORT, () => {
-            console.log(`✅ PH Tour Management Server is running on port ${PORT}`);
+        server = app.listen(envVars.PORT, () => {
+            console.log(`✅ PH Tour Management Server is running on port ${envVars.PORT}`);
         });
     } catch (error) {
         console.error("❌ Failed to start the server:", (error as Error).message);

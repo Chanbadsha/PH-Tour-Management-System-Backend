@@ -1,9 +1,9 @@
+/* eslint-disable no-console */
 import mongoose from "mongoose";
+import { envVars } from "./envVar";
 
 export const connectDB = async (): Promise<void> => {
     try {
-        // const uri = process.env.MONGO_URI || 
-        //   "mongodb+srv://nextLevelUser:nextLevelUser@cluster0.t47d6.mongodb.net/PH_TOUR_MANAGMENT?appName=Cluster0";
 
         // const options: mongoose.ConnectOptions = {
 
@@ -15,7 +15,10 @@ export const connectDB = async (): Promise<void> => {
 
         // await mongoose.connect(uri, options);
 
-        await mongoose.connect(`mongodb+srv://nextLevelUser:nextLevelUser@cluster0.t47d6.mongodb.net/PH_TOUR_MANAGMENT?appName=Cluster0`)
+
+        await mongoose.connect(envVars.DB_URL);
+
+        // await mongoose.connect(`mongodb+srv://nextLevelUser:nextLevelUser@cluster0.t47d6.mongodb.net/PH_TOUR_MANAGMENT?appName=Cluster0`)
         console.log("✅ MongoDB connected successfully");
     } catch (error) {
         console.error("❌ MongoDB connection failed:", (error as Error).message);
