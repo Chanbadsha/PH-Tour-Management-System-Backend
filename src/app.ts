@@ -17,6 +17,7 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 // ✅ Global Error Handler
+
 // app.use((err: unknown, req: Request, res: Response, next: NextFunction) => {
 //     console.error("🔥 Error:", err);
 
@@ -36,5 +37,11 @@ app.get("/", (req: Request, res: Response) => {
 //         message: "Route not found!",
 //     });
 // });
+
+
+
+
+
+
 
 export default app;
