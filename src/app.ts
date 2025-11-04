@@ -1,12 +1,19 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import express, { Application, Request, Response, NextFunction } from "express";
 import { StatusCodes } from "http-status-codes";
+import cors from 'cors'
+import { router } from "./app/routes";
 
 const app: Application = express();
 
 // ✅ Global Middlewares
 app.use(express.json());
+app.use(cors())
+app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
+
+// Router Middleware
+app.use('/api/v1', router)
 
 // ✅ Health Check / Root Route
 app.get("/", (req: Request, res: Response) => {
@@ -16,6 +23,9 @@ app.get("/", (req: Request, res: Response) => {
         message: "Welcome to PH Tour Management Server 🚀",
     });
 });
+
+
+
 
 // ✅ Global Error Handler
 
