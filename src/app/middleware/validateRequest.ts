@@ -10,3 +10,8 @@ export const validateRequest = (zodSchema: ZodObject) => async (req: Request, re
         next(error)
     }
 }
+
+
+
+export default validateRequest;
+
