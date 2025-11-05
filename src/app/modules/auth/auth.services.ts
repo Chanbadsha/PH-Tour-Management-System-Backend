@@ -11,7 +11,7 @@ const userCredentialLogin = async (payload: Partial<IUser>) => {
     const { email, password } = payload
 
     //  Check  user is exists
-    const userIsExist = await USER.findOne({ email });
+    const userIsExist = await USER.findOne({ email }).select("+password");
 
     if (!userIsExist) {
         throw new AppError(StatusCodes.FORBIDDEN, "No user exists with this email");
@@ -25,7 +25,7 @@ const userCredentialLogin = async (payload: Partial<IUser>) => {
         throw new AppError(StatusCodes.FORBIDDEN, "Password is required");
     }
 
-    //  compare the password
+    //  match the password
     const matchPassword = await bcryptjs.compare(password as string, userIsExist.password as string);
 
     if (!matchPassword) {
