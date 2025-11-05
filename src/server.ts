@@ -3,6 +3,7 @@ import { Server } from "http";
 import app from "./app";
 import { connectDB } from "./app/config/db.config";
 import { envVars } from "./app/config/envVar";
+import { seedSuperAdmin } from "./app/utils/seedSuperAdmin";
 
 let server: Server;
 
@@ -16,11 +17,25 @@ const startServer = async (): Promise<void> => {
         server = app.listen(envVars.PORT, () => {
             console.log(`✅ PH Tour Management Server is running on port ${envVars.PORT}`);
         });
+
+
     } catch (error) {
         console.error("❌ Failed to start the server:", (error as Error).message);
         process.exit(1);
     }
 };
+//  Start the server
+
+(async () => {
+    try {
+        await startServer();
+        await seedSuperAdmin();
+    } catch (err) {
+        console.error("❌ Startup failed:", err);
+        process.exit(1);
+    }
+})();
+
 
 /**
  * Gracefully shuts down the server and exits the process.
@@ -39,8 +54,7 @@ const gracefulShutdown = (reason: string, error?: unknown) => {
     }
 };
 
-//  Start the server
-startServer();
+
 
 // 🧩 Global Error Handlers
 

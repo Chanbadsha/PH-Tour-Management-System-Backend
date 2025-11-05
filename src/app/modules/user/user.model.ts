@@ -32,4 +32,4 @@ const userSchema = new Schema<IUser>({
 })
 
 
-export const USER = model<IUser>("USER", userSchema)
+export const Users = model<IUser>("Users", userSchema)

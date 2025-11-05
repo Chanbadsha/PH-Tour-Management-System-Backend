@@ -3,14 +3,14 @@ import bcryptjs from "bcryptjs";
 import AppError from "../../errorHelpers/appError";
 import { envVars } from "../../config/envVar";
 import { IAuthProvider, IUser } from "./user.interface";
-import { USER } from "./user.model";
+import { Users } from "./user.model";
 
 
 const createUserService = async (payload: Partial<IUser>) => {
     const { password, email, ...rest } = payload;
 
     //  Check if user already exists
-    const existingUser = await USER.findOne({ email });
+    const existingUser = await Users.findOne({ email });
     if (existingUser) {
         throw new AppError(StatusCodes.BAD_REQUEST, "A user already exists with this email");
     }
@@ -29,7 +29,7 @@ const createUserService = async (payload: Partial<IUser>) => {
     }
 
     //  Create and save user
-    const user = await USER.create({ email, password: hashedPassword, auths: [authProvider], ...rest });
+    const user = await Users.create({ email, password: hashedPassword, auths: [authProvider], ...rest });
 
     return user;
 };
@@ -37,7 +37,7 @@ const createUserService = async (payload: Partial<IUser>) => {
 // Get All User
 
 const getAllUserService = async () => {
-    const users = await USER.find({})
+    const users = await Users.find({})
     return users
 }
 

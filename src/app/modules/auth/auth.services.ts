@@ -1,7 +1,7 @@
 import { StatusCodes } from "http-status-codes";
 import AppError from "../../errorHelpers/appError";
 import { IUser } from "../user/user.interface";
-import { USER } from "../user/user.model";
+import { Users } from "../user/user.model";
 import bcryptjs from 'bcryptjs'
 
 import { genarateToken } from "../../utils/jwt";
@@ -11,7 +11,7 @@ const userCredentialLogin = async (payload: Partial<IUser>) => {
     const { email, password } = payload
 
     //  Check  user is exists
-    const userIsExist = await USER.findOne({ email }).select("+password");
+    const userIsExist = await Users.findOne({ email }).select("+password");
 
     if (!userIsExist) {
         throw new AppError(StatusCodes.FORBIDDEN, "No user exists with this email");
