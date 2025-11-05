@@ -22,6 +22,7 @@ export const checkAuth = (...authRules: string[]) => async (req: Request, res: R
         if (!authRules.includes(verifiedToken.role)) {
             throw new AppError(StatusCodes.FORBIDDEN, "Access denied: insufficient privileges");
         }
+        req.user = verifiedToken
         next()
     } catch (error) {
         next(error)
